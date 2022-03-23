@@ -19,7 +19,7 @@ function Todolist(){
         if(e.key === 'Enter'){
             const id = createID();
             console.log(id);
-            const todo = {id:id, content:e.target.value, active:false}
+            const todo = {id:id, content:e.target.value, active:!false}
             let newTodos = [...todos, todo];
             e.target.value = "";
             setTodos(newTodos);
@@ -33,6 +33,16 @@ function Todolist(){
 
     }
 
+    function checkTodo(id){
+
+        let newTodos = [...todos];
+        const i = newTodos.findIndex(t => t.id == id);
+        newTodos[i].active = !newTodos[i].active;
+
+        setTodos(newTodos);
+
+    }
+
     function handleOnDragEnd(result){
         if(!result.destination) return;
 
@@ -42,6 +52,8 @@ function Todolist(){
 
         setTodos(newTodos);
     }
+
+
 
     return(
         <div className="Todolist">
@@ -72,7 +84,7 @@ function Todolist(){
                             }
                             >
                             <ListItemButton>
-                                <ListItemIcon>
+                                <ListItemIcon onClick={()=> {checkTodo(todo.id)}}>
                                     <Checkbox
                                     checked = {todo.active}
                                     />
