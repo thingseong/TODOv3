@@ -3,20 +3,17 @@ import TextField from '@mui/material/TextField';
 import AdapterDateFns from '@mui/lab/AdapterDateFns';
 import LocalizationProvider from '@mui/lab/LocalizationProvider';
 import DatePicker from '@mui/lab/DatePicker';
+import CalendarPicker from '@mui/lab/CalendarPicker';
+import { Box } from '@mui/material';
 
 function Calendar() {
-  const [value, setValue] = React.useState(null);
+    const [date, setDate] = React.useState(new Date());
 
   return (
     <LocalizationProvider dateAdapter={AdapterDateFns}>
-      <DatePicker
-        label="Basic example"
-        value={value}
-        onChange={(newValue) => {
-          setValue(newValue);
-        }}
-        renderInput={(params) => <TextField {...params} />}
-      />
+        <Box sx={{mt:5, zoom:2}}>
+        <CalendarPicker  date={date} onChange={(newDate) => setDate(newDate)} />
+        </Box>
     </LocalizationProvider>
   );
 }
