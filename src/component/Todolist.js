@@ -1,6 +1,6 @@
-import { List, Checkbox, ListItem, ListItemButton, ListItemIcon, ListItemText, TextField, IconButton, Box } from "@mui/material";
+import { List, Checkbox, ListItem, ListItemButton, ListItemIcon, ListItemText, TextField, IconButton, Box, Snackbar, Alert } from "@mui/material";
 import DeleteIcon from '@mui/icons-material/Delete';
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import {DragDropContext, Droppable, Draggable} from 'react-beautiful-dnd';
 
 
@@ -8,7 +8,15 @@ import {DragDropContext, Droppable, Draggable} from 'react-beautiful-dnd';
 
 
 function Todolist(){
-    const [todos, setTodos] = useState([]);
+
+    var saved_todos = JSON.parse(localStorage.getItem('todos'));
+    if(saved_todos == null){
+        saved_todos = new Array();
+    }
+    const [todos, setTodos] = useState(saved_todos);
+    useEffect( () => {localStorage.setItem('todos', JSON.stringify(todos));})
+
+    const [open, setOpen] = useState(false);
 
     function createID(){
         const id = Math.random().toString(36).substr(2, 16);
@@ -18,11 +26,11 @@ function Todolist(){
     function addTodo(e){
         if(e.key === 'Enter'){
             const id = createID();
-            console.log(id);
-            const todo = {id:id, content:e.target.value, active:!false}
+            const todo = {id:id, content:e.target.value, active:false}
             let newTodos = [...todos, todo];
             e.target.value = "";
             setTodos(newTodos);
+            setOpen(true);
         }
     }
 
@@ -52,6 +60,19 @@ function Todolist(){
 
         setTodos(newTodos);
     }
+
+    const handleClose = (event, reason) => {
+        if (reason === 'clickaway') {
+          return;
+        }
+    
+        setOpen(false);
+      };
+
+
+      const action = (
+        <></>
+      );      
 
 
 
@@ -103,6 +124,11 @@ function Todolist(){
             )}
             </Droppable>
             </DragDropContext>
+            <Snackbar open={open} autoHideDuration={1000} onClose={handleClose} anchorOrigin={{ vertical:"bottom", horizontal:"center" }}>
+                <Alert variant="filled" onClose={handleClose} severity="success" sx={{ width: '100%' }}>
+                Add success
+                </Alert>
+            </Snackbar>
         </Box>
         )
 }
