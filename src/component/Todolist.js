@@ -1,4 +1,4 @@
-import { List, Checkbox, ListItem, ListItemButton, ListItemIcon, ListItemText, TextField, IconButton } from "@mui/material";
+import { List, Checkbox, ListItem, ListItemButton, ListItemIcon, ListItemText, TextField, IconButton, Box } from "@mui/material";
 import DeleteIcon from '@mui/icons-material/Delete';
 import { useState } from "react";
 import {DragDropContext, Droppable, Draggable} from 'react-beautiful-dnd';
@@ -56,9 +56,9 @@ function Todolist(){
 
 
     return(
-        <div className="Todolist">
+        <Box sx={{mx : "auto", width: '70%'}}>
             <TextField
-                sx={{width: '50%'}}
+                sx={{ml: "25%", mt: 2, width: '50%'}}
                 label="Todo"
                 variant="standard"
                 onKeyUp={addTodo}
@@ -103,7 +103,7 @@ function Todolist(){
             )}
             </Droppable>
             </DragDropContext>
-        </div>
+        </Box>
         )
 }
 
