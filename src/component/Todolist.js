@@ -70,9 +70,6 @@ function Todolist(){
       };
 
 
-      const action = (
-        <></>
-      );      
 
 
 
